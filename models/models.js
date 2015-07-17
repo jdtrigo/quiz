@@ -42,10 +42,13 @@ exports.Quiz = Quiz; // exporta la definición de la tabla Quiz
 sequelize.sync().then(function() {
   Quiz.count().then(function(count) {
       if (count===0) {
-        Quiz.create({ pregunta: 'Capital de Portugal',
-                      respuesta: 'Lisboa'
+        Quiz.create({ pregunta: 'Capital de Alemania',
+                      respuesta: 'Berlín'
+                    });
+				Quiz.create({ pregunta: 'Capital de Inglaterra',
+                      respuesta: 'Londres'
                     })
             .then(function(){console.log('Base de datos inicializada')});
-      };
+      } else {console.log('Base de datos ya existente'); };
   });
 });
