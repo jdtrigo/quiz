@@ -26,3 +26,10 @@ footer {
   clear: both;
   display: block;
 }
+
+.buscador {
+  float: right;
+  border: 2px solid maroon;
+  padding: 20px;
+  border-radius: 10px;
+}
