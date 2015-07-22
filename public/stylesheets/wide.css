@@ -33,3 +33,7 @@ footer {
   padding: 20px;
   border-radius: 10px;
 }
+
+.izq {
+  float:left;
+}

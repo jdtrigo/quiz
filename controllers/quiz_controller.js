@@ -52,6 +52,28 @@ exports.answer = function (req, res) {
 };
 
 
+// GET quizes/new
+exports.new = function (req, res) {
+  var quiz = models.Quiz.build (
+      {pregunta: "Pregunta", respuesta: "Respuesta"}
+  );
+
+  res.render('quizes/new', {quiz: quiz});
+};
+
+
+// GET quizes/create
+exports.create = function (req, res) {
+  var quiz = models.Quiz.build(req.body.quiz);
+
+  quiz.save({fields: ["pregunta", "respuesta"]}).then(function(){
+    res.redirect('/quizes');
+  })
+};
+
+
+
+
 // Viejo:
 // // GET quizes/question
 // exports.question = function (req, res) {
