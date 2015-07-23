@@ -17,3 +17,8 @@ body {
 footer, input {
   font-size: large;
 }
+
+.ErrorMsgs {
+  color: #f61;
+  font-size: smaller;
+}
