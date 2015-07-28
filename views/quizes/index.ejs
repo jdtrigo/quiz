@@ -4,6 +4,9 @@
     <td>
       <a href="/quizes/<%= quizes[i].id %>"><%= quizes[i].pregunta %></a>
     </td>
+    <td class='tema'>
+      <%= quizes[i].tema %>
+    </td>
     <td>
       <a href="/quizes/<%= quizes[i].id %>/edit"><button>Editar</button></a>
     </td>
@@ -20,6 +23,11 @@
 
 <form class="buscador" action="/quizes" method="get">
   Búsqueda <p>
-  <input type="text" name="search" value="">
+  <input type="text" name="search" value="" autofocus>
   <input type="submit" value="Enviar">
 </form>
+
+
+<script type="text/javascript">
+  document.querySelector('td a').focus();
+</script>

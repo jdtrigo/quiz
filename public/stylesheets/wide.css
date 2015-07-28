@@ -1,5 +1,5 @@
 body {
-  background: #999;
+  background-color: seagreen;
 }
 
 #page-wrap:after {
@@ -43,4 +43,10 @@ footer {
 .ErrorMsgs {
   color: #f61;
   font-size: smaller;
+}
+
+
+.tema {
+  color: maroon;
+  background-color: lightblue;
 }
