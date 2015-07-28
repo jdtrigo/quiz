@@ -107,6 +107,17 @@ exports.update = function (req, res) {
 };
 
 
+// DELETE quizes/delete
+exports.destroy = function (req, res) {
+  // borramos de la base de datos y mostarmos quizes
+  req.quiz
+  .destroy()
+  .then(function(err) {
+    res.redirect('/quizes');
+  }).catch(function(error){next(error)});
+};
+
+
 
 
 // Viejo:
