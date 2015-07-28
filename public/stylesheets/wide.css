@@ -28,9 +28,11 @@ footer {
 }
 
 .buscador {
-  float: right;
+  position: absolute;
+  top: 100px;
+  right: 10px;
   border: 2px solid maroon;
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
 }
 
