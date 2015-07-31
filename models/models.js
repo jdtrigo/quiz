@@ -1,8 +1,5 @@
 var path = require('path');
 
-// Postgress  DATABASE_URL = postgres://user:passwd@host:port/DATABASE_URL
-// SQLite     DATABASE_URL = sqlite://:@:/
-
 var url = process.env.DATABASE_URL.match(/(.*)\:\/\/(.*?)\:(.*)@(.*)\:(.*)\/(.*)/);
 var DB_name   = (url[6] || null);
 var user      = (url[2] || null);
@@ -27,16 +24,16 @@ var sequelize = new Sequelize(DB_name, user, pwd,
 		omitNull: true      // solo para postgres
 });
 
-/* VIEJO
-var sequelize = new Sequelize(null, null, null,
-                      {dialect: "sqlite", storage: "quiz.sqlite"}
-                    );
-*/
 
-//Importar la definición de la tabla Quiz en quiz.js
-var Quiz = sequelize.import(path.join(__dirname, 'quiz'));
+//Importar la definición de la tablas en quiz.js
+var Quiz 		= sequelize.import(path.join(__dirname, 'quiz'));
+var Comment = sequelize.import(path.join(__dirname, 'comment'));
 
-exports.Quiz = Quiz; // exporta la definición de la tabla Quiz
+Comment.belongsTo(Quiz);
+Quiz.hasMany(Comment);
+
+exports.Quiz = Quiz; 				// exporta la definición de la tabla Quiz
+exports.Comment = Comment;	// exporta la definición de la tabla Comment
 
 // sequelize.sync() crea e inicializa la tabla de preguntas en la DB
 sequelize.sync().then(function() {

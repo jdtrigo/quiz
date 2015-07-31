@@ -2,17 +2,20 @@ var models = require('../models/models.js');
 
 // Autoload - factoriza el código si la ruta incluye :quizId
 exports.load = function (req, res, next, quizId) {
-  models.Quiz.findById(quizId).then(
-    function(quiz) {
+  models.Quiz.find(
+    {
+      where : { id: Number(quizId) },
+      include: [{ model: models.Comment }]
+    }).then(function(quiz) {
       if (quiz) {
         req.quiz = quiz;
         next();
       } else {
         next(new Error('No existe quizId=' + quizId));
       }
-    }
-  ).catch(function(error) { next(error); });
+    }).catch(function(error) { next(error); });
 };
+
 
 // GET quizes
 exports.index = function (req, res) {
@@ -32,13 +35,13 @@ exports.index = function (req, res) {
       }
     ).catch(function(error) { next(error); });
   }
-
 };
 
 // GET quizes/question
 exports.show = function (req, res) {
-  res.render('quizes/show', {quiz: req.quiz, errors: []});
+  res.render('quizes/show.ejs', {quiz: req.quiz, errors: []});
 };
+
 
 // GET quizes/:id/answer
 exports.answer = function (req, res) {
@@ -66,7 +69,7 @@ exports.new = function (req, res) {
 };
 
 
-// GET quizes/create
+// POST quizes/create
 exports.create = function (req, res) {
   var quiz = models.Quiz.build(req.body.quiz);
 
@@ -117,21 +120,3 @@ exports.destroy = function (req, res) {
     res.redirect('/quizes');
   }).catch(function(error){next(error)});
 };
-
-
-
-
-// Viejo:
-// // GET quizes/question
-// exports.question = function (req, res) {
-//   res.render('quizes/question', {pregunta: 'Capital de Italia'});
-// };
-//
-// // GET quizes/answer
-// exports.answer = function (req, res) {
-//   if (req.query.respuesta === 'Roma') {
-//     res.render('quizes/answer', {respuesta: 'Correcto'});
-//   } else {
-//     res.render('quizes/answer', {respuesta: 'Incorrecto'});
-//   }
-// };
