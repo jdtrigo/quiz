@@ -1,0 +1,5 @@
+mkdir cert
+cd cert
+openssl genrsa -out quiz-2015-key.pem 2048
+openssl req -new -sha256 -key quiz-2015-key.pem -out quiz-2015-csr.pem -config "C:\Program Files (x86)\Git\ssl\openssl.cnf"
+openssl x509 -req -in quiz-2015-csr.pem -signkey quiz-2015-key.pem -out quiz-2015-cert.pem
