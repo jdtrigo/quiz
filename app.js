@@ -20,9 +20,6 @@ app.set('view engine', 'ejs');
 
 app.use(partials());
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
-//app.use(favicon(path.join(__dirname,'public/favicon.ico')));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded());
@@ -30,6 +27,26 @@ app.use(cookieParser('quiz-trigo-2015'));
 app.use(session());
 app.use(methodOverride('_method'));
 app.use(express.static(path.join(__dirname, 'public')));
+
+// expiración de la sesion
+app.use(function(req, res, next) {
+    if (req.session.user) { // si la sesion está iniciada...
+        if (!req.session.timestamp) { // si es la primera vez...
+            req.session.timestamp=(new Date()).getTime(); // generamos TimeStamp
+        } else { // si no es la primera vez...
+            var diferencia = (new Date()).getTime() - req.session.timestamp; // medimos el tiempo que ha pasado (en milisegundos)
+            if (diferencia > 110000) { // si han pasado mas de x segundos (2 minutos = 120000 ms)
+                delete req.session.timestamp;
+                delete req.session.user; // destruimos la session del usuario
+            } else { // si han pasado menos de x segundos...
+                req.session.timestamp = (new Date()).getTime(); // establecemos la nueva marca
+                res.locals.session = req.session; // la hacemos visible en las vistas para poder poner un contador hacia atrás
+            }
+        }
+    }
+    next(); // en cualquier caso, pasamos el testigo al siguiente MW
+});
+
 
 // Helpers dinámicos
 app.use(function(req, res, next) {
