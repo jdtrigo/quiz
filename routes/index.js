@@ -13,6 +13,8 @@ router.get('/', function(req, res) {
 
 // Autoload de comandos con : quizId
 router.param('quizId', quizController.load); // autoload: quizId
+// Autoload de comandos con : commentId
+router.param('commentId', commentController.load); // autoload: quizId
 
 // Rutas de session
 router.get('/login', sessionController.new);
@@ -30,8 +32,10 @@ router.get('/quizes/:quizId(\\d+)/edit',     sessionController.loginRequired, qu
 router.put('/quizes/:quizId(\\d+)',          sessionController.loginRequired, quizController.update);
 router.delete('/quizes/:quizId(\\d+)',       sessionController.loginRequired, quizController.destroy);
 
+// Rutas de comentarios
 router.get('/quizes/:quizId(\\d+)/comments/new',  commentController.new);
 router.post('/quizes/:quizId(\\d+)/comments',     commentController.create);
+router.get('/quizes/:quizId(\\d+)/comments/:commentId(\\d+)/publish',  sessionController.loginRequired, commentController.publish); // debería ser PUT, ya que estamos modificando la base de datos...
 
 /* GET author page. */
 router.get('/author', function(req, res) {
