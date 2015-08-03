@@ -40,11 +40,18 @@ footer {
   float:left;
 }
 
+.dcha {
+  float:right;
+}
+
+.titulo {
+  display: inline-block;
+}
+
 .ErrorMsgs {
   color: #f61;
   font-size: smaller;
 }
-
 
 .tema {
   color: maroon;

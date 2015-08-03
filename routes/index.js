@@ -3,6 +3,7 @@ var router = express.Router();
 
 var quizController = require('../controllers/quiz_controller');
 var commentController = require('../controllers/comment_controller');
+var sessionController = require('../controllers/session_controller');
 
 
 // GET home page.
@@ -12,6 +13,12 @@ router.get('/', function(req, res) {
 
 // Autoload de comandos con : quizId
 router.param('quizId', quizController.load); // autoload: quizId
+
+// Rutas de session
+router.get('/login', sessionController.new);
+router.post('/login', sessionController.create);
+router.get('/logout', sessionController.destroy); // debería hacerse con un DELETE para ser restful
+
 
 router.get('/quizes',                        quizController.index);
 router.get('/quizes/:quizId(\\d+)',          quizController.show);
